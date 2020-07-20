@@ -1,0 +1,54 @@
+;; defines a custom function my-map that takes a function to apply to each element and a list
+;; (define (my-map f lst)
+	;; defines a conditional statement that checks if the list is empty
+	;; if the list is empty, it:
+	;; - returns an empty list
+	;; otherwise, it:
+	;; - applies the function to the first item in the list
+	;; - then joins that to the result of calling my-map with every
+	;; - other item in the list
+;;	(
+;;		cond
+;;		[
+;;	   		(empty? lst)
+;;			empty
+;;		]
+;;   		[
+;;	   		else
+;;			(
+;;				cons 
+;;				(
+;;					f (first lst)
+;;				)
+;;				(
+;;					my-map f (rest lst)
+;;				)
+;;			)
+;;		]
+;;	)
+;; )
+
+
+
+;; reduces to:
+;; add 2 to 3 and store that value
+;; add 1 to the stored value and return that (6)
+
+;; functions: X
+;; map: X
+;; sqrt
+;; lambda: X
+;; cond: X
+;; define: X
+;; first
+;; rest
+;; and: X
+;; or: X
+;; unless: X
+;; if: X
+;; >: X
+;; <: X
+;; cons
+;; cons?
+;; empty
+;; empty?
