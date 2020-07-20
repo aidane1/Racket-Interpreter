@@ -66,31 +66,32 @@ std::vector<Token *> Lexer::lex(std::string value)
 			token->character = character;
 			output.push_back(matching_value.second);
 
-			for (int j = 0; j < matching_value.first; j++)
-			{
-				if (value[i] == '\n')
-				{
-					line++;
-					character = 1;
-				}
-				else
-				{
-					character++;
-				}
-				i++;
-			}
+			// for (int j = 0; j < matching_value.first; j++)
+			// {
+			// 	if (value[i] == '\n')
+			// 	{
+			// 		line++;
+			// 		character = 1;
+			// 	}
+			// 	else
+			// 	{
+			// 		character++;
+			// 	}
+			// 	i++;
+			// }
+			i += matching_value.first;
 		}
 		else
 		{
-			if (value[i] == '\n')
-			{
-				line++;
-				character = 1;
-			}
-			else
-			{
-				character++;
-			}
+			// if (value[i] == '\n')
+			// {
+			// 	line++;
+			// 	character = 1;
+			// }
+			// else
+			// {
+			// 	character++;
+			// }
 
 			i++;
 		}

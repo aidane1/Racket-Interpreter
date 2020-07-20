@@ -80,7 +80,11 @@ Token *Environment::evaluate_ast(ASTTreeNode *node, std::map<std::string, Token 
 		if (definition->children[0]->children.size() != compact_trees.size())
 		{
 			// whoops, wrong number of arguments
-			Environment::error_message(arguments_error, Environment::construct_argument_error(node->token->value, definition->children[0]->children.size(), compact_trees.size()), node->token->line, node->token->character);
+			if (compact_trees.size() != 0)
+			{
+				Environment::error_message(arguments_error, Environment::construct_argument_error(node->token->value, definition->children[0]->children.size(), compact_trees.size()), node->token->line, node->token->character);
+			}
+
 			return node->token;
 		}
 		else
@@ -198,6 +202,11 @@ Token *Environment::evaluate_ast(ASTTreeNode *node, std::map<std::string, Token 
 		{
 			return ASTEvaluation::evaluate_or(node, this, arg_map);
 		}
+		else if (node->token->value == "values")
+		{
+			auto compact_trees = std::vector<Token *>();
+			return ASTEvaluation::evaluate_values(node, compact_trees, this, arg_map);
+		}
 		else
 		{
 			return node->token;
@@ -211,6 +220,35 @@ Token *Environment::evaluate_ast(ASTTreeNode *node, std::map<std::string, Token 
 		{
 			auto compact_trees = get_compact_trees(node, arg_map);
 			return ASTEvaluation::evaluate_print(node, compact_trees);
+		}
+		else if (node->token->value == "first")
+		{
+			auto compact_trees = get_compact_trees(node, arg_map);
+			return ASTEvaluation::evaluate_first(node, compact_trees);
+		}
+		else if (node->token->value == "rest")
+		{
+			auto compact_trees = get_compact_trees(node, arg_map);
+			return ASTEvaluation::evaluate_rest(node, compact_trees);
+		}
+		else if (node->token->value == "cons")
+		{
+			auto compact_trees = get_compact_trees(node, arg_map);
+			return ASTEvaluation::evaluate_cons(node, compact_trees);
+		}
+		else if (node->token->value == "cons?")
+		{
+			auto compact_trees = get_compact_trees(node, arg_map);
+			return ASTEvaluation::evaluate_cons_q(node, compact_trees);
+		}
+		else if (node->token->value == "empty")
+		{
+			return ASTEvaluation::evaluate_empty();
+		}
+		else if (node->token->value == "empty?")
+		{
+			auto compact_trees = get_compact_trees(node, arg_map);
+			return ASTEvaluation::evaluate_empty_q(node, compact_trees);
 		}
 		else if (node->token->value == "define")
 		{

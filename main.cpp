@@ -7,6 +7,7 @@
 #include "tree_node.hpp"
 #include "environment.hpp"
 #include "linked_list.hpp"
+#include "colors.hpp"
 
 #include <regex>
 #include <map>
@@ -158,7 +159,7 @@ int main(int argc, char *argv[])
 
 	//matches the "empty" identifier
 	lexer->add_symbol(
-		TokenMatcher(std::regex("^empty\\s+", std::regex_constants::ECMAScript | std::regex_constants::icase), 5, identifier), [](std::string value, int index, std::smatch match) -> auto {
+		TokenMatcher(std::regex("^empty\\s*", std::regex_constants::ECMAScript | std::regex_constants::icase), 5, identifier), [](std::string value, int index, std::smatch match) -> auto {
 			return std::pair<int, Token *>(match.length(), new Token("empty", 4, identifier));
 		});
 
@@ -249,15 +250,24 @@ int main(int argc, char *argv[])
 		buffer << t.rdbuf();
 		std::string program = buffer.str();
 
+		std::cout << KYEL << "Lexing..." << RST << std::endl;
+
 		std::vector<Token *> output = lexer->lex(program);
 
 		// lexer->dump(output);
 
+		std::cout << KRED << "Lexer Done" << RST << std::endl;
+
 		Parser *parser = new Parser();
+
+		std::cout << KBLU << "Parsing..." << RST << std::endl;
 
 		ASTTreeNode *ast = parser->generate_abstract_syntax_tree(output);
 
-		parser->dump(ast);
+		std::cout << KRED << "Parser Done" << RST << std::endl;
+
+		// parser->dump(ast);
+
 
 		Environment *environment = new Environment();
 
