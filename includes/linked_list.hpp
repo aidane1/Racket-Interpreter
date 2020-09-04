@@ -29,7 +29,7 @@ public:
 		head = new_head;
 	}
 
-	void print()
+	void display()
 	{
 		auto current = head;
 		while (current != nullptr)

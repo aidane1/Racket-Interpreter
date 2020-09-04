@@ -1,19 +1,27 @@
 #ifndef PARSER
 #define PARSER
 
-#include <vector>
 #include "token.hpp"
-#include "tree_node.hpp"
+#include <vector>
+#include <string>
+
+class ASTTreeNode
+{
+private:
+public:
+	Token *token;
+	std::vector<ASTTreeNode *> children;
+	ASTTreeNode *parent;
+
+	ASTTreeNode();
+};
 
 class Parser
 {
 private:
 public:
-	std::vector<Token *> generate_reverse_polish_notion(std::vector<Token *> tokens);
-
-	ASTTreeNode *generate_abstract_syntax_tree(std::vector<Token *> tokens);
-
-	void dump(ASTTreeNode *node, int depth = 0);
+	ASTTreeNode *parse(std::vector<Token *> tokens);
+	void dump(ASTTreeNode *root, int depth = 0);
 };
 
 #endif

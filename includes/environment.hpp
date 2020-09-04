@@ -1,49 +1,31 @@
 #ifndef ENVIRONMENT
 #define ENVIRONMENT
 
-#include "tree_node.hpp"
-#include "token.hpp"
+#include <vector>
 #include <map>
-#include <string>
+// #include <hash_map>
 
-enum ErrorType
-{
-	type_error,
-	arguments_error,
-	definition_error,
-	parse_error
-};
-
-struct VariableDefinition
-{
-	ASTTreeNode *node;
-	ASTTreeNode *scope;
-};
+#include "parser.hpp"
+#include "token.hpp"
 
 class Environment
 {
 private:
-	// std::map<ASTTreeNode *, std::map<std::string, ASTTreeNode *>> definitions;
-
 	std::map<std::string, ASTTreeNode *> definitions;
+	std::map<std::string, Token *> arg_map;
+
+	bool verbose = true;
 
 public:
-	void evaluate(ASTTreeNode *node);
+	Environment(bool verbose = true);
 
-	std::vector<Token *> get_compact_trees(ASTTreeNode *node, std::map<std::string, Token *> arg_map);
+	void evaluate(ASTTreeNode *root);
 
-	Token *evaluate_ast(ASTTreeNode *node, std::map<std::string, Token *> args_map);
+	Token *evaluate_node(ASTTreeNode *node);
+	Token *evaluate_variable(Token *token);
 
-	// Token *evaluate_function(ASTTreeNode *node, std::vector<Token *> args, std::map<ASTTreeNode *, std::map<std::string, ASTTreeNode *>> &definitions, std::map<std::string, Token *> args_map = std::map<std::string, Token *>());
-
-	// return reference to function if exists, otherwise return nullptr
-	// ASTTreeNode *find_function_definition(ASTTreeNode *node, std::string name, std::map<ASTTreeNode *, std::map<std::string, ASTTreeNode *>> &definitions);
-
-	static void error_message(ErrorType type, std::string error, int line, int character);
-
-	static std::string construct_type_error(std::string type, std::string value, std::string expected);
-	static std::string construct_argument_error(std::string function_call, int expected, int found);
-	static std::string construct_definition_error(std::string function_name);
+	std::vector<Token *> get_rest(std::vector<ASTTreeNode *> rest);
+	std::vector<Token *> get_all(std::vector<ASTTreeNode *> all);
 };
 
 #endif
