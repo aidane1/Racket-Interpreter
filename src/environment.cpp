@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <sstream>
 
 #include "colors.hpp"
 #include "parser.hpp"
@@ -253,7 +254,16 @@ Token *Environment::evaluate_node(ASTTreeNode *node)
 	}
 	else
 	{
-		return evaluate_variable(node->token);
+		Token *return_val = evaluate_variable(node->token);
+
+		if (return_val->type == error)
+		{
+			throw return_val->string_value;
+		}
+		else
+		{
+			return return_val;
+		}
 	}
 }
 
@@ -275,4 +285,47 @@ std::vector<Token *> Environment::get_all(std::vector<ASTTreeNode *> children)
 		all.push_back(evaluate_node(children[i]));
 	}
 	return all;
+}
+
+Token *Environment::error_message(ErrorType type, std::string error_message, int line, int character)
+{
+	std::stringstream location;
+	location << " On line " << line << " at character " << character;
+	switch (type)
+	{
+	case type_error:
+		std::cout << KRED << error_message << location.str() << RST << std::endl;
+		break;
+	case parse_error:
+		std::cout << KRED << error_message << location.str() << RST << std::endl;
+		break;
+	default:
+		std::cout << KRED << error_message << location.str() << RST << std::endl;
+		break;
+	}
+
+	Token *token = new Token(error_message, error);
+
+	return token;
+}
+
+std::string Environment::construct_type_error(std::string type, std::string value, std::string expected)
+{
+	std::stringstream ss;
+	ss << "Type Error: " << type << " \"" << value << "\" is not a(n) " << expected << ".";
+	return ss.str();
+}
+
+std::string Environment::construct_argument_error(std::string function_name, int expected, int found)
+{
+	std::stringstream ss;
+	ss << "Argument Error: Function call to " << function_name << " expected " << expected << " arguments, found " << found << ".";
+	return ss.str();
+}
+
+std::string Environment::construct_definition_error(std::string function_name)
+{
+	std::stringstream ss;
+	ss << "Definition Error: Undefined function " << function_name << ".";
+	return ss.str();
 }

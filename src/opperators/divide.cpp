@@ -1,13 +1,13 @@
 #include "evaluation.hpp"
 
 #include "token.hpp"
+#include <iostream>
 
-Token *Evaluation::evaluate_plus(std::vector<Token *> args)
+Token *Evaluation::evaluate_divide(std::vector<Token *> args)
 {
-
 	if (args.size() == 0)
 	{
-		auto error_text = Environment::construct_argument_error("+", 2, 0);
+		auto error_text = Environment::construct_argument_error("/", 2, 0);
 
 		Token *error = Environment::error_message(arguments_error, error_text, 0, 0);
 
@@ -51,11 +51,11 @@ Token *Evaluation::evaluate_plus(std::vector<Token *> args)
 		{
 			if (args[i]->type == lang_int)
 			{
-				value += args[i]->stored_value.lang_int;
+				value /= args[i]->stored_value.lang_int;
 			}
 			else
 			{
-				value += args[i]->stored_value.lang_float;
+				value /= args[i]->stored_value.lang_float;
 			}
 		}
 

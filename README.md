@@ -43,23 +43,14 @@ make runfast
 
 Racket samples can be found in the /samples directory
 
-## Structure
+## Supported
 
-### /includes
+ Function        | Handles Argument Errors           | Handles Type Errors  |
+| ------------- | ------------- | ----- |
+| + | [x] | [x] |
+| - | - [x] | - [x] |
+| \* | - [ ] | - [ ] |
 
-Contains the header files for the project
-
-### /src
-
-Contains the complete C++ files for the project
-
-### /text
-
-Contains the text files used by the interpreter (for -h, -v, etc...)
-
-### /main.cpp
-
-The main entry point to the project
 
 
 ## License
