@@ -47,9 +47,9 @@ Racket samples can be found in the /samples directory
 
  Function        | Handles Argument Errors           | Handles Type Errors  |
 | ------------- | ------------- | ----- |
-| + | [x] | [x] |
-| - | - [x] | - [x] |
-| \* | - [ ] | - [ ] |
+| + | :heavy_check_mark: | :heavy_check_mark: |
+| - | :heavy_check_mark: | :heavy_check_mark: |
+| \* | :x: | :x: |
 
 
 
