@@ -45,12 +45,29 @@ Racket samples can be found in the /samples directory
 
 ## Supported
 
- Function        | Handles Argument Errors           | Handles Type Errors  |
-| ------------- | ------------- | ----- |
-| + | :heavy_check_mark: | :heavy_check_mark: |
-| - | :heavy_check_mark: | :heavy_check_mark: |
-| \* | :x: | :x: |
-
+ Function        | Implimented? | Handles Argument Errors           | Handles Type Errors  |
+| ------------- | ------------- | ----- | ---- |
+| + | yes | :heavy_check_mark: | :heavy_check_mark: |
+| - | yes | :heavy_check_mark: | :heavy_check_mark: |
+| \* | yes | :heavy_check_mark: | :heavy_check_mark: |
+| \\ | yes | :heavy_check_mark: | :heavy_check_mark: |
+| > | yes | :x: | :x: |
+| < | yes | :x: | :x: |
+| cons | yes | :x: | :x: |
+| cons? | yes | :x: | :x: |
+| empty | yes | :x: | :x: |
+| empty? | yes | :x: | :x: |
+| equal? | yes | :x: | :x: |
+| first | yes | :x: | :x: |
+| list | yes | :heavy_check_mark: | :x: |
+| print | yes | :x: | :x: |
+| rest | yes | :x: | :x: |
+| and | yes | :x: | :x: |
+| or | yes | :x: | :x: |
+| if | yes | :x: | :x: |
+| unless | yes | :x: | :x: |
+| cond | yes | :x: | :x: |
+| not | no | :x: | :x: |
 
 
 ## License
