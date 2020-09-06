@@ -92,7 +92,7 @@ Tokenizer *get_tokens()
 
 	// matches a "/" sign followed by at least one whitespace character
 	tokenizer->add_symbol(
-		std::regex("^\\\\", std::regex_constants::ECMAScript | std::regex_constants::icase), 7, opperand, [](std::string value, int index, std::smatch match) -> auto {
+		std::regex("^/", std::regex_constants::ECMAScript | std::regex_constants::icase), 7, opperand, [](std::string value, int index, std::smatch match) -> auto {
 			return std::pair<int, Token *>(match.length(), new Token("/", opperand));
 		});
 

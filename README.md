@@ -36,7 +36,7 @@ make runfast
 
 # to execute a specific file in verbose mode 
 # (outputs Lexer, Tokenizer, Parser, and Environment)
-./bin/app -v ./samples/sample.racket
+./bin/app ./samples/sample.racket -v 
 ```
 
 ## Samples
@@ -47,27 +47,30 @@ Racket samples can be found in the /samples directory
 
  Function        | Implimented? | Handles Argument Errors           | Handles Type Errors  |
 | ------------- | ------------- | ----- | ---- |
+| lambda | yes | :x: | :x: |
+| define | yes | :x: | :x: |
 | + | yes | :heavy_check_mark: | :heavy_check_mark: |
 | - | yes | :heavy_check_mark: | :heavy_check_mark: |
 | \* | yes | :heavy_check_mark: | :heavy_check_mark: |
 | \\ | yes | :heavy_check_mark: | :heavy_check_mark: |
 | > | yes | :x: | :x: |
 | < | yes | :x: | :x: |
-| cons | yes | :x: | :x: |
-| cons? | yes | :x: | :x: |
-| empty | yes | :x: | :x: |
-| empty? | yes | :x: | :x: |
-| equal? | yes | :x: | :x: |
-| first | yes | :x: | :x: |
+| cons | yes | :heavy_check_mark: | :heavy_check_mark: |
+| cons? | yes | :heavy_check_mark: | :heavy_check_mark: |
+| empty | yes | :heavy_check_mark: | :heavy_check_mark: |
+| empty? | yes | :heavy_check_mark: | :heavy_check_mark: |
+| equal? | yes | :heavy_check_mark: | :heavy_check_mark: |
+| first | yes | :heavy_check_mark: | :heavy_check_mark: |
 | list | yes | :heavy_check_mark: | :x: |
-| print | yes | :x: | :x: |
-| rest | yes | :x: | :x: |
+| display | yes | :x: | :x: |
+| rest | yes | :heavy_check_mark: | :heavy_check_mark: |
 | and | yes | :x: | :x: |
 | or | yes | :x: | :x: |
 | if | yes | :x: | :x: |
 | unless | yes | :x: | :x: |
 | cond | yes | :x: | :x: |
 | not | no | :x: | :x: |
+
 
 
 ## License

@@ -17,6 +17,10 @@ OPPERATOR_FILES := $(wildcard $(SRC_DIR)/opperators/*.cpp)
 OPPERATOR_OBJ_FILES := $(patsubst $(SRC_DIR)/opperators/%.cpp,$(OBJ_DIR)/opperators/%.o,$(OPPERATOR_FILES))
 OPPERATOR_OBJ_FILES_FAST := $(patsubst $(SRC_DIR)/opperators/%.cpp,$(OBJ_DIR)/opperators/%-fast.o,$(OPPERATOR_FILES))
 
+CHECK_FILES := $(wildcard $(SRC_DIR)/checks/*.cpp)
+CHECK_OBJ_FILES := $(patsubst $(SRC_DIR)/checks/%.cpp,$(OBJ_DIR)/checks/%.o,$(CHECK_FILES))
+CHECK_OBJ_FILES_FAST := $(patsubst $(SRC_DIR)/checks/%.cpp,$(OBJ_DIR)/checks/%-fast.o,$(CHECK_FILES))
+
 
 
 
@@ -26,14 +30,14 @@ LDFLAGS := -O3
 
 
 run: bin/app
-	# ./bin/app ./samples/sample.racket
+	# ./bin/app ./samples/sample.racket -v
 	./bin/app
 
 test: bin/app
 	./bin/app ./tests/display_test/1/display_input_1.racket
 	./bin/app ./tests/add_test/1/add_input_1.racket
 
-bin/app: bin/main.o $(OBJ_FILES) $(IDENTIFIER_OBJ_FILES) $(KEYWORD_OBJ_FILES) $(OPPERATOR_OBJ_FILES)
+bin/app: bin/main.o $(OBJ_FILES) $(IDENTIFIER_OBJ_FILES) $(KEYWORD_OBJ_FILES) $(OPPERATOR_OBJ_FILES) $(CHECK_OBJ_FILES)
 	g++ $(LDFLAGS) -o $@ $^
 
 
@@ -51,6 +55,9 @@ $(OBJ_DIR)/keywords/%.o: $(SRC_DIR)/keywords/%.cpp
 	g++ $(CPPFLAGS) -c -o $@ $<
 
 $(OBJ_DIR)/opperators/%.o: $(SRC_DIR)/opperators/%.cpp
+	g++ $(CPPFLAGS) -c -o $@ $<
+
+$(OBJ_DIR)/checks/%.o: $(SRC_DIR)/checks/%.cpp
 	g++ $(CPPFLAGS) -c -o $@ $<
 
 
@@ -78,6 +85,9 @@ $(OBJ_DIR)/keywords/%-fast.o: $(SRC_DIR)/keywords/%.cpp
 $(OBJ_DIR)/opperators/%-fast.o: $(SRC_DIR)/opperators/%.cpp
 	g++ $(CPPFASTFLAGS) -c -o $@ $<
 
+$(OBJ_DIR)/checks/%-fast.o: $(SRC_DIR)/checks/%.cpp
+	g++ $(CPPFASTFLAGS) -c -o $@ $<
+
 
 clean:
 	rm -rf ./bin
@@ -85,3 +95,4 @@ clean:
 	mkdir ./bin/identifiers
 	mkdir ./bin/keywords
 	mkdir ./bin/opperators
+	mkdir ./bin/checks

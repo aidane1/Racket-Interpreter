@@ -45,8 +45,6 @@ bool Evaluation::check_truth(Token *token)
 	}
 }
 
-// simple_functions["+"] = &Evaluation::evaluate_plus;
-
 std::map<std::string, Token *(*)(std::vector<Token *>)> Evaluation::simple_identifiers = {
 	{"+", &Evaluation::evaluate_plus},
 	{"-", &Evaluation::evaluate_minus},
@@ -64,6 +62,8 @@ std::map<std::string, Token *(*)(std::vector<Token *>)> Evaluation::simple_ident
 std::map<std::string, Token *(*)(std::vector<Token *>)> Evaluation::simple_opperators = {
 	{"+", &Evaluation::evaluate_plus},
 	{"-", &Evaluation::evaluate_minus},
+	{"*", &Evaluation::evaluate_times},
+	{"/", &Evaluation::evaluate_divide},
 	{">", &Evaluation::evaluate_greater},
 	{"<", &Evaluation::evaluate_less},
 };
@@ -74,6 +74,23 @@ std::map<std::string, Token *(*)(ASTTreeNode *, Environment *)> Evaluation::simp
 	{"and", &Evaluation::evaluate_and},
 	{"or", &Evaluation::evaluate_or},
 	{"unless", &Evaluation::evaluate_unless},
+};
+
+std::map<std::string, Token *(*)(std::vector<Token *>)> Evaluation::check_opperators = {
+	{"+", &Evaluation::check_math},
+	{"-", &Evaluation::check_math},
+	{"/", &Evaluation::check_math},
+	{"*", &Evaluation::check_math},
+};
+
+std::map<std::string, Token *(*)(std::vector<Token *>)> Evaluation::check_identifiers = {
+	{"cons", &Evaluation::check_cons},
+	{"cons?", &Evaluation::check_cons_q},
+	{"empty?", &Evaluation::check_cons_q},
+	{"first", &Evaluation::check_cons_q},
+	{"rest", &Evaluation::check_cons_q},
+	{"empty", &Evaluation::check_empty},
+	{"equal?", &Evaluation::check_equal},
 };
 
 bool Evaluation::check_simple(Token *token)
@@ -111,11 +128,36 @@ Token *Evaluation::evaluate_simple(Token *token, std::vector<Token *> args, ASTT
 		{
 		case identifier:
 		{
+
+			auto itterator = Evaluation::check_identifiers.find(token->string_value);
+
+			if (itterator != check_identifiers.end())
+			{
+				Token *(*check_func)(std::vector<Token *>) = itterator->second;
+				Token *check_result = (*check_func)(args);
+				if (check_result != nullptr)
+				{
+					return check_result;
+				}
+			}
+
 			Token *(*eval_func)(std::vector<Token *>) = Evaluation::simple_identifiers[token->string_value];
 			return (*eval_func)(args);
 		}
 		case opperand:
 		{
+			auto itterator = Evaluation::check_opperators.find(token->string_value);
+
+			if (itterator != check_opperators.end())
+			{
+				Token *(*check_func)(std::vector<Token *>) = itterator->second;
+				Token *check_result = (*check_func)(args);
+				if (check_result != nullptr)
+				{
+					return check_result;
+				}
+			}
+
 			Token *(*eval_func)(std::vector<Token *>) = Evaluation::simple_opperators[token->string_value];
 			return (*eval_func)(args);
 		}
