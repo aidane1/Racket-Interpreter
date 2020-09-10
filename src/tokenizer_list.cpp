@@ -1,5 +1,8 @@
 #include "tokenizer_list.hpp"
 
+//TODO:
+// sqr, sqrt, string-append, expt, true, false, images, define-struct
+
 Tokenizer *get_tokens()
 {
 	Tokenizer *tokenizer = new Tokenizer();
@@ -100,6 +103,12 @@ Tokenizer *get_tokens()
 	tokenizer->add_symbol(
 		std::regex("^list", std::regex_constants::ECMAScript | std::regex_constants::icase), 5, identifier, [](std::string value, int index, std::smatch match) -> auto {
 			return std::pair<int, Token *>(match.length(), new Token("list", identifier));
+		});
+
+	//matches the "string-append" identifier
+	tokenizer->add_symbol(
+		std::regex("^string-append", std::regex_constants::ECMAScript | std::regex_constants::icase), 5, identifier, [](std::string value, int index, std::smatch match) -> auto {
+			return std::pair<int, Token *>(match.length(), new Token("string-append", identifier));
 		});
 
 	//matches the "first" identifier

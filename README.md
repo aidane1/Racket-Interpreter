@@ -45,6 +45,8 @@ Racket samples can be found in the /samples directory
 
 ## Supported
 
+Comments with the ";" character are supported
+
  Function        | Implimented? | Handles Argument Errors           | Handles Type Errors  |
 | ------------- | ------------- | ----- | ---- |
 | lambda | yes | :x: | :x: |
@@ -61,6 +63,7 @@ Racket samples can be found in the /samples directory
 | empty? | yes | :heavy_check_mark: | :heavy_check_mark: |
 | equal? | yes | :heavy_check_mark: | :heavy_check_mark: |
 | first | yes | :heavy_check_mark: | :heavy_check_mark: |
+| string-append | yes | :heavy_check_mark: | :heavy_check_mark: |
 | list | yes | :heavy_check_mark: | :x: |
 | display | yes | :x: | :x: |
 | rest | yes | :heavy_check_mark: | :heavy_check_mark: |

@@ -16,7 +16,6 @@ ASTTreeNode *Parser::parse(std::vector<Token *> tokens)
 	{
 		if (tokens[i]->string_value == "(" || tokens[i]->string_value == "[")
 		{
-
 			ASTTreeNode *new_node = new ASTTreeNode();
 			new_node->parent = current;
 			current->children.push_back(new_node);
@@ -51,7 +50,8 @@ void Parser::dump(ASTTreeNode *node, int depth)
 	if (node->token == nullptr)
 	{
 		// std::cout << whitespace << "____: " << node->children.size() << " child(ren) \n";
-		std::cout << whitespace << "____" << "\n";
+		std::cout << whitespace << "____"
+				  << "\n";
 	}
 	else
 	{

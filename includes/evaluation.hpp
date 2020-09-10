@@ -22,6 +22,7 @@ public:
 	static Token *evaluate_empty(std::vector<Token *> args);
 	static Token *evaluate_empty_q(std::vector<Token *> args);
 	static Token *evaluate_equal_q(std::vector<Token *> args);
+	static Token *evaluate_string_append(std::vector<Token *> args);
 
 	// keywords
 	static Token *evaluate_cond(ASTTreeNode *node, Environment *environment);
@@ -44,6 +45,7 @@ public:
 	static Token *check_cons_q(std::vector<Token *> args);
 	static Token *check_empty(std::vector<Token *> args);
 	static Token *check_equal(std::vector<Token *> args);
+	static Token *check_string_append(std::vector<Token *> args);
 
 	static std::map<std::string, Token *(*)(std::vector<Token *>)> simple_identifiers;
 	static std::map<std::string, Token *(*)(std::vector<Token *>)> simple_opperators;

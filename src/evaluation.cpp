@@ -57,6 +57,7 @@ std::map<std::string, Token *(*)(std::vector<Token *>)> Evaluation::simple_ident
 	{"empty", &Evaluation::evaluate_empty},
 	{"empty?", &Evaluation::evaluate_empty_q},
 	{"equal?", &Evaluation::evaluate_equal_q},
+	{"string-append", &Evaluation::evaluate_string_append},
 };
 
 std::map<std::string, Token *(*)(std::vector<Token *>)> Evaluation::simple_opperators = {
@@ -91,6 +92,7 @@ std::map<std::string, Token *(*)(std::vector<Token *>)> Evaluation::check_identi
 	{"rest", &Evaluation::check_cons_q},
 	{"empty", &Evaluation::check_empty},
 	{"equal?", &Evaluation::check_equal},
+	{"string-append", &Evaluation::check_string_append},
 };
 
 bool Evaluation::check_simple(Token *token)

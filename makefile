@@ -65,7 +65,7 @@ $(OBJ_DIR)/checks/%.o: $(SRC_DIR)/checks/%.cpp
 runfast: bin/app-fast
 	./bin/app-fast ./samples/sample.racket
 
-bin/app-fast: bin/main-fast.o $(OBJ_FILES_FAST) ${IDENTIFIER_OBJ_FILES_FAST} $(KEYWORD_OBJ_FILES_FAST) $(OPPERATOR_OBJ_FILES_FAST)
+bin/app-fast: bin/main-fast.o $(OBJ_FILES_FAST) ${IDENTIFIER_OBJ_FILES_FAST} $(KEYWORD_OBJ_FILES_FAST) $(OPPERATOR_OBJ_FILES_FAST) $(CHECK_OBJ_FILES_FAST)
 	g++ $(CPPFASTFLAGS) -o $@ $^
 
 

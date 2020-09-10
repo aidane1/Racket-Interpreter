@@ -58,8 +58,15 @@ std::vector<std::string> Lexer::lex(std::string input)
 		// otherwise, continue as usual
 		else
 		{
+			// hit a semicolon
+			if (input[i] == ';')
+			{
+				while (input[++i] != '\n' && i < input.size())
+				{
+				};
+			}
 			// hit a quote while not in a string
-			if (input[i] == '\"')
+			else if (input[i] == '\"')
 			{
 				is_in_string = true;
 				previous_index = i;
