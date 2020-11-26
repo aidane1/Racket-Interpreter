@@ -102,15 +102,18 @@ Token *Environment::evaluate_variable(Token *token)
 
 Token *Environment::evaluate_node(ASTTreeNode *node)
 {
+
 	if (node->token == nullptr)
 	{
 		// No children, a useless node
+
 		if (node->children.size() == 0)
 		{
 			return node->token;
 		}
 		else if (node->children[0]->token == nullptr)
 		{
+
 			Token *final = nullptr;
 
 			for (int i = 0; i < node->children.size(); i++)
@@ -124,9 +127,15 @@ Token *Environment::evaluate_node(ASTTreeNode *node)
 		// Children, a non-useless node
 		else
 		{
+
 			Token *first = evaluate_node(node->children[0]);
 
-			if (Evaluation::check_simple(first))
+			if (first->type == keyword)
+			{
+				std::vector<Token *> rest;
+				return Evaluation::evaluate_simple(first, rest, node, this);
+			}
+			else if (Evaluation::check_simple(first))
 			{
 				std::vector<Token *> rest = get_rest(node->children);
 				return Evaluation::evaluate_simple(first, rest, node, this);

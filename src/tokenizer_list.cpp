@@ -1,7 +1,8 @@
 #include "tokenizer_list.hpp"
 
 //TODO:
-// sqr, sqrt, string-append, expt, true, false, images, define-struct
+// true, false, define-struct, check-expect
+// also in function calls replace all parameters before executing anything
 
 Tokenizer *get_tokens()
 {
@@ -29,6 +30,12 @@ Tokenizer *get_tokens()
 	tokenizer->add_symbol(
 		std::regex("^\\]", std::regex_constants::ECMAScript | std::regex_constants::icase), 10, symbol, [](std::string value, int index, std::smatch match) -> auto {
 			return std::pair<int, Token *>(match.length(), new Token("]", symbol));
+		});
+
+	//matches the "check-expect" identifier
+	tokenizer->add_symbol(
+		std::regex("^check-expect", std::regex_constants::ECMAScript | std::regex_constants::icase), 5, identifier, [](std::string value, int index, std::smatch match) -> auto {
+			return std::pair<int, Token *>(match.length(), new Token("check-expect", identifier));
 		});
 
 	//matches the "display" identifier
@@ -75,6 +82,18 @@ Tokenizer *get_tokens()
 			return std::pair<int, Token *>(match.length(), new Token(value, variable));
 		});
 
+	// matches "true" boolean
+	tokenizer->add_symbol(
+		std::regex("^true", std::regex_constants::ECMAScript | std::regex_constants::icase), 4, boolean, [](std::string value, int index, std::smatch match) -> auto {
+			return std::pair<int, Token *>(match.length(), new Token("#t", boolean));
+		});
+
+	// matches "false" boolean
+	tokenizer->add_symbol(
+		std::regex("^false", std::regex_constants::ECMAScript | std::regex_constants::icase), 4, boolean, [](std::string value, int index, std::smatch match) -> auto {
+			return std::pair<int, Token *>(match.length(), new Token("#f", boolean));
+		});
+
 	// matches a "+" sign followed by at least one whitespace character
 	tokenizer->add_symbol(
 		std::regex("^\\+", std::regex_constants::ECMAScript | std::regex_constants::icase), 7, opperand, [](std::string value, int index, std::smatch match) -> auto {
@@ -111,6 +130,48 @@ Tokenizer *get_tokens()
 			return std::pair<int, Token *>(match.length(), new Token("string-append", identifier));
 		});
 
+	//matches the "substring" identifier
+	tokenizer->add_symbol(
+		std::regex("^substring", std::regex_constants::ECMAScript | std::regex_constants::icase), 5, identifier, [](std::string value, int index, std::smatch match) -> auto {
+			return std::pair<int, Token *>(match.length(), new Token("substring", identifier));
+		});
+
+	//matches the "string-length" identifier
+	tokenizer->add_symbol(
+		std::regex("^string-length", std::regex_constants::ECMAScript | std::regex_constants::icase), 5, identifier, [](std::string value, int index, std::smatch match) -> auto {
+			return std::pair<int, Token *>(match.length(), new Token("string-length", identifier));
+		});
+
+	//matches the "string=?" identifier
+	tokenizer->add_symbol(
+		std::regex("^string=\\?", std::regex_constants::ECMAScript | std::regex_constants::icase), 5, identifier, [](std::string value, int index, std::smatch match) -> auto {
+			return std::pair<int, Token *>(match.length(), new Token("string=?", identifier));
+		});
+
+	//matches the "string?" identifier
+	tokenizer->add_symbol(
+		std::regex("^string\\?", std::regex_constants::ECMAScript | std::regex_constants::icase), 5, identifier, [](std::string value, int index, std::smatch match) -> auto {
+			return std::pair<int, Token *>(match.length(), new Token("string?", identifier));
+		});
+
+	//matches the "expt" identifier
+	tokenizer->add_symbol(
+		std::regex("^expt", std::regex_constants::ECMAScript | std::regex_constants::icase), 5, identifier, [](std::string value, int index, std::smatch match) -> auto {
+			return std::pair<int, Token *>(match.length(), new Token("expt", identifier));
+		});
+
+	//matches the "sqrt" identifier
+	tokenizer->add_symbol(
+		std::regex("^sqrt", std::regex_constants::ECMAScript | std::regex_constants::icase), 5, identifier, [](std::string value, int index, std::smatch match) -> auto {
+			return std::pair<int, Token *>(match.length(), new Token("sqrt", identifier));
+		});
+
+	//matches the "sqr" identifier
+	tokenizer->add_symbol(
+		std::regex("^sqr", std::regex_constants::ECMAScript | std::regex_constants::icase), 4, identifier, [](std::string value, int index, std::smatch match) -> auto {
+			return std::pair<int, Token *>(match.length(), new Token("sqr", identifier));
+		});
+
 	//matches the "first" identifier
 	tokenizer->add_symbol(
 		std::regex("^first", std::regex_constants::ECMAScript | std::regex_constants::icase), 5, identifier, [](std::string value, int index, std::smatch match) -> auto {
@@ -129,10 +190,10 @@ Tokenizer *get_tokens()
 			return std::pair<int, Token *>(match.length(), new Token("empty?", identifier));
 		});
 
-	//matches the "empty" identifier
+	//matches the "empty" value
 	tokenizer->add_symbol(
 		std::regex("^empty", std::regex_constants::ECMAScript | std::regex_constants::icase), 5, identifier, [](std::string value, int index, std::smatch match) -> auto {
-			return std::pair<int, Token *>(match.length(), new Token("empty", identifier));
+			return std::pair<int, Token *>(match.length(), new Token("list", list));
 		});
 
 	//matches the "cons?" identifier
@@ -193,6 +254,18 @@ Tokenizer *get_tokens()
 	tokenizer->add_symbol(
 		std::regex("^#t", std::regex_constants::ECMAScript | std::regex_constants::icase), 4, boolean, [](std::string value, int index, std::smatch match) -> auto {
 			return std::pair<int, Token *>(2, new Token("#t", boolean));
+		});
+
+	// matches a ">=" sign followed by at least one whitespace character
+	tokenizer->add_symbol(
+		std::regex("^\\>=", std::regex_constants::ECMAScript | std::regex_constants::icase), 8, opperand, [](std::string value, int index, std::smatch match) -> auto {
+			return std::pair<int, Token *>(match.length(), new Token(">=", opperand));
+		});
+
+	// matches a "<=" sign followed by at least one whitespace character
+	tokenizer->add_symbol(
+		std::regex("^\\<=", std::regex_constants::ECMAScript | std::regex_constants::icase), 8, opperand, [](std::string value, int index, std::smatch match) -> auto {
+			return std::pair<int, Token *>(match.length(), new Token("<=", opperand));
 		});
 
 	// matches a ">" sign followed by at least one whitespace character

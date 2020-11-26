@@ -30,8 +30,8 @@ LDFLAGS := -O3
 
 
 run: bin/app
-	# ./bin/app ./samples/sample.racket -v
-	./bin/app
+	./bin/app ./samples/sample.racket
+	# ./bin/app
 
 test: bin/app
 	./bin/app ./tests/display_test/1/display_input_1.racket

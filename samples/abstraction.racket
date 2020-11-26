@@ -1,0 +1,16 @@
+(define (filter2 lox fn)
+	(cond
+		[(empty? lox) empty]
+		[else
+			(if (fn (first lox))
+				(cons (first lox) (filter2 (rest lox) fn))
+				(filter2 (rest lox) fn))]
+		)
+)
+
+
+(check-expect (filter2 (list -1 1 2 3 4 5) (lambda (x) (>= x 2))) (list 2 3 4 5))
+
+(check-expect (filter2 (list "mam" "dod" "lad" "yeet") (lambda (x) (string=? (substring x 1 2) "a"))) (list "mam" "lad"))
+
+(check-expect (filter2 (list "mam" "dod" "lad" "yeet" "yeeeet") (lambda (x) (<= (string-length x) 3))) (list "mam" "dod" "lad"))

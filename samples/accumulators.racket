@@ -1,0 +1,18 @@
+
+(define (dropnacc lox acc n)
+	(cond
+		[(empty? lox) empty]
+		[else
+			(if (equal? acc 0)
+				(dropnacc (rest lox) n n)
+				(cons (first lox) (dropnacc (rest lox) (- acc 1) n )))]))
+
+(define (dropn lox n)
+	(dropnacc lox n n))
+
+
+(check-expect (dropn empty 0) empty)
+(check-expect (dropn (list "a" "b" "c" "d" "e" "f") 0) empty)
+(check-expect (dropn (list "a" "b" "c" "d" "e" "f") 1) (list "a" "c" "e"))
+(check-expect (dropn (list "a" "b" "c" "d" "e" "f") 2) (list "a" "b" "d" "e"))
+

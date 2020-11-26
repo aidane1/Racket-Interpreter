@@ -57,7 +57,15 @@ std::map<std::string, Token *(*)(std::vector<Token *>)> Evaluation::simple_ident
 	{"empty", &Evaluation::evaluate_empty},
 	{"empty?", &Evaluation::evaluate_empty_q},
 	{"equal?", &Evaluation::evaluate_equal_q},
+	{"check-expect", &Evaluation::evaluate_check_expect},
 	{"string-append", &Evaluation::evaluate_string_append},
+	{"string-length", &Evaluation::evaluate_string_length},
+	{"substring", &Evaluation::evaluate_substring},
+	{"string?", &Evaluation::evaluate_string_q},
+	{"string=?", &Evaluation::evaluate_string_equal_q},
+	{"sqrt", &Evaluation::evaluate_sqrt},
+	{"sqr", &Evaluation::evaluate_sqr},
+	{"expt", &Evaluation::evaluate_expt},
 };
 
 std::map<std::string, Token *(*)(std::vector<Token *>)> Evaluation::simple_opperators = {
@@ -67,6 +75,8 @@ std::map<std::string, Token *(*)(std::vector<Token *>)> Evaluation::simple_opper
 	{"/", &Evaluation::evaluate_divide},
 	{">", &Evaluation::evaluate_greater},
 	{"<", &Evaluation::evaluate_less},
+	{">=", &Evaluation::evaluate_greater_equal},
+	{"<=", &Evaluation::evaluate_less_equal},
 };
 
 std::map<std::string, Token *(*)(ASTTreeNode *, Environment *)> Evaluation::simple_keywords = {
@@ -93,10 +103,21 @@ std::map<std::string, Token *(*)(std::vector<Token *>)> Evaluation::check_identi
 	{"empty", &Evaluation::check_empty},
 	{"equal?", &Evaluation::check_equal},
 	{"string-append", &Evaluation::check_string_append},
+	{"string?", &Evaluation::check_single_arg},
+	{"string-length", &Evaluation::check_single_string},
+	{"string=?", &Evaluation::check_string_append},
+	{"sqrt", &Evaluation::check_sqr},
+	{"sqr", &Evaluation::check_sqr},
+	{"expt", &Evaluation::check_expt},
+	{"substring", &Evaluation::check_substring},
+	{"check-expect", &Evaluation::check_check_expect},
+
 };
 
 bool Evaluation::check_simple(Token *token)
 {
+	
+
 	switch (token->type)
 	{
 	case identifier:
@@ -123,6 +144,7 @@ bool Evaluation::check_simple(Token *token)
 
 Token *Evaluation::evaluate_simple(Token *token, std::vector<Token *> args, ASTTreeNode *node, Environment *environment)
 {
+	
 	if (Evaluation::check_simple(token))
 	{
 

@@ -1,0 +1,12 @@
+
+
+(define (total-string-length los) 
+  (cond [(empty? los) 0]
+        [else
+         (+ (string-length (first los))
+            (total-string-length (rest los)))]))
+
+
+
+(check-expect (total-string-length empty) 0)
+(check-expect (total-string-length (list "Aidan" "Is" "A" "Programmer")) 18)

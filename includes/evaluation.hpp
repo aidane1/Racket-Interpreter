@@ -16,6 +16,7 @@ public:
 	static Token *evaluate_list(std::vector<Token *> args);
 	static Token *evaluate_first(std::vector<Token *> args);
 	static Token *evaluate_display(std::vector<Token *> args);
+	static Token *evaluate_check_expect(std::vector<Token *> args);
 	static Token *evaluate_rest(std::vector<Token *> args);
 	static Token *evaluate_cons(std::vector<Token *> args);
 	static Token *evaluate_cons_q(std::vector<Token *> args);
@@ -23,6 +24,13 @@ public:
 	static Token *evaluate_empty_q(std::vector<Token *> args);
 	static Token *evaluate_equal_q(std::vector<Token *> args);
 	static Token *evaluate_string_append(std::vector<Token *> args);
+	static Token *evaluate_sqrt(std::vector<Token *> args);
+	static Token *evaluate_sqr(std::vector<Token *> args);
+	static Token *evaluate_expt(std::vector<Token *> args);
+	static Token *evaluate_string_length(std::vector<Token *> args);
+	static Token *evaluate_string_q(std::vector<Token *> args);
+	static Token *evaluate_string_equal_q(std::vector<Token *> args);
+	static Token *evaluate_substring(std::vector<Token *> args);
 
 	// keywords
 	static Token *evaluate_cond(ASTTreeNode *node, Environment *environment);
@@ -38,6 +46,8 @@ public:
 	static Token *evaluate_divide(std::vector<Token *> args);
 	static Token *evaluate_greater(std::vector<Token *> args);
 	static Token *evaluate_less(std::vector<Token *> args);
+	static Token *evaluate_greater_equal(std::vector<Token *> args);
+	static Token *evaluate_less_equal(std::vector<Token *> args);
 
 	//checks
 	static Token *check_math(std::vector<Token *> args);
@@ -46,6 +56,12 @@ public:
 	static Token *check_empty(std::vector<Token *> args);
 	static Token *check_equal(std::vector<Token *> args);
 	static Token *check_string_append(std::vector<Token *> args);
+	static Token *check_single_string(std::vector<Token *> args);
+	static Token *check_single_arg(std::vector<Token *> args);
+	static Token *check_sqr(std::vector<Token *> args);
+	static Token *check_expt(std::vector<Token *> args);
+	static Token *check_substring(std::vector<Token *> args);
+	static Token *check_check_expect(std::vector<Token *> args);
 
 	static std::map<std::string, Token *(*)(std::vector<Token *>)> simple_identifiers;
 	static std::map<std::string, Token *(*)(std::vector<Token *>)> simple_opperators;
